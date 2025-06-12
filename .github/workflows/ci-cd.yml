@@ -1,16 +1,18 @@
-name: CI/CD - Build & Push to ECR
+name: Build and Push to ECR
 
-on: workflow_dispatch
-
+on:
+  push:
+    branches:
+      - main
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REPO: 376129873306.dkr.ecr.eu-west-2.amazonaws.com/threatops
-  IMAGE_TAG: latest
+  ECR_REPOSITORY: threatops
 
 jobs:
-  push:
+  build-and-push:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
