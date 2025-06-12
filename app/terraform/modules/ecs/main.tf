@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "this" {
       essential = true
       portMappings = [{
         containerPort = var.container_port
-        protocol      = "tcp"
+        hostPort = var.container_port
       }]
       logConfiguration = {
         logDriver = "awslogs"
@@ -50,20 +50,13 @@ resource "aws_ecs_task_definition" "this" {
           awslogs-stream-prefix = "app"
         }
       }
-     healthCheck = {
-  command     = ["CMD-SHELL", "curl -f http://localhost:${var.container_port}/ || exit 1"]
-  interval    = 30
-  timeout     = 5
-  retries     = 3
-  startPeriod = 30
-}
 
     }
   ])
 }
 
 resource "aws_ecs_service" "this" {
-  name            = "${var.name_prefix}-service"
+  name            = "${var.name_prefix}-service1"
   cluster         = aws_ecs_cluster.ecs_cluster.id
   task_definition = aws_ecs_task_definition.this.arn
   desired_count   = var.desired_count

@@ -30,3 +30,20 @@ variable "ssl_policy" {
 variable "certificate_arn" {
   type = string
 }
+variable "create_route53_record" {
+  type        = bool
+  description = "Whether to create a Route 53 alias record pointing to the ALB."
+  default     = false
+}
+
+variable "zone_id" {
+  type        = string
+  description = "The Route 53 Hosted Zone ID for yonishage.co.uk."
+  default     = ""
+}
+
+variable "domain_name" {
+  type        = string
+  description = "The full domain name to route to the ALB (e.g., tm.yonishage.co.uk)."
+  default     = ""
+}
