@@ -1,10 +1,10 @@
 name: Terraform Destroy 
 
 on:
-  workflow_dispatch:  # Manual trigger from GitHub UI
+  workflow_dispatch:  
 
 env:
-  AWS_REGION: eu-west-2  # Update as needed
+  AWS_REGION: eu-west-2  
 
 jobs:
   destroy:
@@ -14,7 +14,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./terraform  # Adjust if your .tf files are elsewhere
+        working-directory: ./terraform  
 
     steps:
       - name: Checkout Code
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.7.5  # Or your preferred version
+          terraform_version: 1.12.2
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
