@@ -1,37 +1,38 @@
-name: CI/CD - Build & Push to ECR
+name: Build and Push to ECR
 
-on: workflow_dispatch
-
+on:
+   workflow_dispatch
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REPO: 376129873306.dkr.ecr.eu-west-2.amazonaws.com/threatops
-  IMAGE_TAG: latest
+  ECR_REPOSITORY: threatops
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Image
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Log in to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: eu-west-2
 
-      - name: Build Docker image
-        run: |
-          docker build -t $ECR_REPO:$IMAGE_TAG .
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Push Docker image to ECR
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker image (amd64)
         run: |
-          docker push $ECR_REPO:$IMAGE_TAG
+          IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest"
+          docker buildx build \
+            --platform linux/amd64 \
+            --tag $IMAGE_URI \
+            --push .
