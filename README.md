@@ -28,6 +28,7 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 ![Architecture](./images/working-app.png)
 
 ## 📁 Directory Structure
+```sh
 .
 ├── .github
 │   └── workflows
@@ -46,7 +47,7 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 │       ├── Route53
 │       └── VPC
 
-
+```
 ---
 
 ## 📦 Deployment Workflow
