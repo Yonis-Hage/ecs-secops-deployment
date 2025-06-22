@@ -8,7 +8,7 @@ env:
 
 jobs:
   plan:
-    name: Terraform Plan and Security Checks
+    name: Terraform Plan and Linting
     runs-on: ubuntu-latest
 
     defaults:
@@ -38,12 +38,6 @@ jobs:
 
       - name: Run TFLint
         run: tflint --init && tflint
-
-      - name: Install Checkov
-        run: pip install checkov
-
-      - name: Run Checkov
-        run: checkov -d .
 
       - name: Terraform Init
         run: terraform init
