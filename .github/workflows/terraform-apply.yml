@@ -1,4 +1,4 @@
-name: Terraform Plan
+name: Terraform Apply
 
 on:
   workflow_dispatch:
@@ -7,8 +7,8 @@ env:
   AWS_REGION: eu-west-2
 
 jobs:
-  plan:
-    name: Terraform Plan and Security Checks
+  apply:
+    name: Terraform Apply
     runs-on: ubuntu-latest
 
     defaults:
@@ -32,30 +32,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Install TFLint
-        run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-
-      - name: Run TFLint
-        run: tflint --init && tflint
-
-      - name: Install Checkov
-        run: pip install checkov
-
-      - name: Run Checkov
-        run: checkov -d .
+      - name: Download Terraform Plan
+        uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: ./terraform
 
       - name: Terraform Init
         run: terraform init
 
-      - name: Terraform Validate
-        run: terraform validate
-
-      - name: Terraform Plan
-        run: terraform plan -out=tfplan
-
-      - name: Save Terraform Plan
-        uses: actions/upload-artifact@v4
-        with:
-          name: tfplan
-          path: ./terraform/tfplan
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
