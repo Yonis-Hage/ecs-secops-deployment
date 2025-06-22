@@ -50,7 +50,7 @@ jobs:
           set -e
           terraform plan -out=tfplan
 
-      - name: Debug: List files
+      - name: List files
         run: ls -l
 
       - name: Save Terraform Plan
