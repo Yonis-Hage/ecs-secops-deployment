@@ -1,14 +1,14 @@
-name: Build and Push to ECR
+name: Build, Scan, and Push to ECR
 
 on:
-   workflow_dispatch
+  workflow_dispatch
 
 env:
   AWS_REGION: eu-west-2
   ECR_REPOSITORY: threatops
 
 jobs:
-  build-and-push:
+  build-scan-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,10 +29,23 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build and Push Docker image (amd64)
+      - name: Build Docker image (amd64) without pushing
         run: |
           IMAGE_URI="${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest"
+          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
           docker buildx build \
             --platform linux/amd64 \
             --tag $IMAGE_URI \
-            --push .
+            --load .
+
+      - name: Scan Image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "${{ env.IMAGE_URI }}"
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push "${{ env.IMAGE_URI }}"
