@@ -46,7 +46,12 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: |
+          set -e
+          terraform plan -out=tfplan
+
+      - name: Debug: List files
+        run: ls -l
 
       - name: Save Terraform Plan
         uses: actions/upload-artifact@v4

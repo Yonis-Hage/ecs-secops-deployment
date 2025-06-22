@@ -38,6 +38,15 @@ jobs:
           name: tfplan
           path: ./terraform
 
+      - name: Check if tfplan exists
+        run: |
+          if [ ! -f tfplan ]; then
+            echo "❌ tfplan not found."
+            exit 1
+          else
+            echo "✅ tfplan found."
+          fi
+
       - name: Terraform Init
         run: terraform init
 
