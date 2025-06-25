@@ -27,6 +27,9 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 ## Working Image
 ![Architecture](./images/image-working.png)
 
+## Architecture Diagram
+![Architecture](./images/architecture-diagram.png)
+
 ## 📁 Directory Structure
 ```sh
 .
