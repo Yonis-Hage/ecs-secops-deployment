@@ -7,16 +7,14 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . .
-RUN yarn build
 
+RUN yarn build
 
 FROM node:18-alpine
 
 WORKDIR /app
 
-
 RUN addgroup -S nonroot && adduser -S nonroot -G nonroot
-
 
 COPY --from=build /app/build ./build
 
