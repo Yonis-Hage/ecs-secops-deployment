@@ -39,6 +39,19 @@ jobs:
       - name: Run TFLint
         run: tflint --init && tflint
 
+      - name: Install tfsec
+        run: |
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
+
+      - name: Run tfsec
+        run: tfsec .
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov
+        run: checkov -d .
+
       - name: Terraform Init
         run: terraform init
 
