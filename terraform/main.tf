@@ -25,20 +25,8 @@ module "alb" {
   certificate_arn     = module.acm.certificate_arn
 }
 
-# 4) Route53 Record for ALB
-resource "aws_route53_record" "app" {
-  zone_id = module.acm.route53_zone_id
-  name    = "tm.yonishage.co.uk"
-  type    = "A"
 
-  alias {
-    name                   = module.alb.dns_name
-    zone_id                = module.alb.zone_id
-    evaluate_target_health = true
-  }
-}
-
-# 5) ECS Service
+# 4) ECS Service
 module "ecs" {
   source                = "./modules/ecs"
   name_prefix           = "test"
