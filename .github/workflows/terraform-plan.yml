@@ -39,6 +39,13 @@ jobs:
       - name: Run TFLint
         run: tflint --init && tflint
 
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name:  Run Checkov
+        run: |
+         checkov -d ./ --quiet || true
+
       - name: Terraform Init
         run: terraform init
 

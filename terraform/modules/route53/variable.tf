@@ -23,3 +23,14 @@ variable "records" {
   type        = list(string)
   description = "A list of values (e.g., IPs for A record, hostnames for CNAME, etc)."
 }
+variable "alias_name" {
+  type        = string
+  default     = ""
+  description = "Alias DNS name for A records"
+}
+
+variable "alias_zone_id" {
+  type        = string
+  default     = ""
+  description = "Alias Zone ID for A records"
+}
