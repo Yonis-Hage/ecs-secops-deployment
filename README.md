@@ -1,4 +1,4 @@
-# 🚀 Ecs Secops Deployment
+# 🚀 ECS Secops Deployment
 
 This project deploys the **Threat Composer** application to **AWS ECS Fargate** using **Terraform** and **GitHub Actions** running under a **custom domain** with **SSL setup**, providing a fully automated, repeatable, and console-free deployment experience.
 
