@@ -1,6 +1,8 @@
 # 🚀 ECS Secops Deployment
 
-This project deploys the **Threat Composer** application to **AWS ECS Fargate** using **Terraform** and **GitHub Actions** running under a **custom domain** with **SSL setup**, providing a fully automated, repeatable, and console-free deployment experience.
+This project deploys the **Threat Composer** application to **AWS ECS Fargate** using **Terraform** and **GitHub Actions* running under a **custom domain** with **SSL setup**, providing a fully automated, repeatable and console-free deployment experience.  
+
+Security is integrated throughout the pipeline by using **GitHub OIDC with fine-grained IAM roles** instead of static credentials, **HashiCorp Vault** for managing sensitive secrets, and **policy-as-code** with tools like **OPA/Conftest** and **Terraform scanners** (TFLint, Trivy, Semgrep) to enforce secure configurations early (**shift-left**). ECS tasks are provisioned with least-privilege IAM roles and infrastructure security policies are validated continuously, ensuring both automation and security are first-class citizens in the deployment.  
 
 ---
 
