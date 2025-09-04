@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "this" {
       essential = true
       portMappings = [{
         containerPort = var.container_port
-        hostPort = var.container_port
+        hostPort      = var.container_port
       }]
       logConfiguration = {
         logDriver = "awslogs"
@@ -62,11 +62,11 @@ resource "aws_ecs_service" "this" {
   desired_count   = var.desired_count
   launch_type     = "FARGATE"
 
- network_configuration {
-  subnets         = var.subnet_ids
-  security_groups = [aws_security_group.ecs_tasks.id]
-  assign_public_ip = false
-}
+  network_configuration {
+    subnets          = var.subnet_ids
+    security_groups  = [aws_security_group.ecs_tasks.id]
+    assign_public_ip = false
+  }
 
   load_balancer {
     target_group_arn = var.target_group_arn
@@ -88,7 +88,7 @@ resource "aws_security_group" "ecs_tasks" {
     from_port       = var.container_port
     to_port         = var.container_port
     protocol        = "tcp"
-    security_groups = [var.alb_security_group_id]  # allow from ALB
+    security_groups = [var.alb_security_group_id] # allow from ALB
   }
 
   egress {

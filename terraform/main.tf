@@ -38,12 +38,12 @@ module "ecs" {
   alb_security_group_id = module.alb.security_group_id
 }
 module "route53" {
-  source         = "./modules/route53"
-  zone_id        = module.acm.route53_zone_id
-  record_name    = "tm.yonishage.co.uk"
-  record_type    = "A"
-  ttl            = 300
-  records        = [] 
-  alias_name     = module.alb.dns_name
-  alias_zone_id  = module.alb.zone_id
+  source        = "./modules/route53"
+  zone_id       = module.acm.route53_zone_id
+  record_name   = "tm.yonishage.co.uk"
+  record_type   = "A"
+  ttl           = 300
+  records       = []
+  alias_name    = module.alb.dns_name
+  alias_zone_id = module.alb.zone_id
 }

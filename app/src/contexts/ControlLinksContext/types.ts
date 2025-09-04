@@ -14,7 +14,7 @@
   limitations under the License.
  ******************************************************************************************************************** */
 
-import { ContextProviderBaseProps } from '../types';
+import { ContextProviderBaseProps } from "../types";
 
-export interface ControlLinksContextProviderProps extends ContextProviderBaseProps {
-}
+export interface ControlLinksContextProviderProps
+  extends ContextProviderBaseProps {}

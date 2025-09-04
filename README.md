@@ -6,17 +6,18 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 
 ## 🧱 Key Components
 
-- **Docker**:  
+- **Docker**:
   `app/Dockerfile` defines the container image for the application.
 
-- **Terraform Modules**:  
+- **Terraform Modules**:
   Infrastructure as Code is split into reusable modules:
+
   - `VPC`
   - `ALB`
   - `ECS`
   - `Route53`
 
-- **CI/CD Pipelines (GitHub Actions)**:  
+- **CI/CD Pipelines (GitHub Actions)**:
   Automates all infrastructure and deployment tasks:
   - Docker image build & push to ECR
   - Terraform plan & apply
@@ -25,12 +26,15 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 ---
 
 ## Working Image
+
 ![Architecture](./images/image-working.png)
 
 ## Architecture Diagram
+
 ![Architecture](./images/architecture-diagram2.png)
 
 ## 📁 Directory Structure
+
 ```sh
 .
 ├── .github
@@ -51,15 +55,18 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 │       └── VPC
 
 ```
+
 ---
 
 ## 📦 Deployment Workflow
 
 1. **Docker Build & Push to ECR**
+
    - Builds the Docker image.
    - Pushes the image to Amazon ECR.
 
 2. **Terraform Deploy**
+
    - Initializes, plans, and applies the Terraform configuration.
    - Provisions all AWS resources required for the application.
 
@@ -87,6 +94,5 @@ This project deploys the **Threat Composer** application to **AWS ECS Fargate** 
 - Fully automated and repeatable infrastructure setup.
 - No manual steps in AWS console.
 - Scalable and production-ready deployment pipeline.
-
 
 [def]: ./images/working-image.png
