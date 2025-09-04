@@ -42,6 +42,7 @@ Security is integrated throughout the pipeline by using **GitHub OIDC with fine-
 ├── .github
 │   └── workflows
 │       ├── ci-cd.yml
+|       ├── pre-commit.yml
 │       ├── terraform-deploy.yml
 │       └── terraform-destroy.yml
 ├── app
@@ -51,13 +52,17 @@ Security is integrated throughout the pipeline by using **GitHub OIDC with fine-
 │   ├── backend.tf
 │   ├── main.tf
 │   └── modules
-│       ├── ALB
+|       ├── ALB
+│       └── IAM
 │       ├── ECS
-│       ├── Route53
+│       ├─ Route53
 │       └── VPC
+│       
+
 
 ```
 
+---
 ---
 
 ## 📦 Deployment Workflow
@@ -71,6 +76,7 @@ Security is integrated throughout the pipeline by using **GitHub OIDC with fine-
 
    - Initializes, plans, and applies the Terraform configuration.
    - Provisions all AWS resources required for the application.
+   - Enforces security policies via policy-as-code (OPA/Conftest, Trivy, TFLint).
 
 3. **Terraform Destroy**
    - Destroys all provisioned AWS infrastructure.
@@ -86,7 +92,8 @@ Security is integrated throughout the pipeline by using **GitHub OIDC with fine-
 - **Security Groups**: Firewall rules for networking security.
 - **Route 53**: Manages DNS records for custom domain routing.
 - **ACM (AWS Certificate Manager)**: Issues SSL/TLS certificates.
-- **IAM**: Secures access to AWS resources.
+- **IAM**: Secures access to AWS resources with least-privilege roles and GitHub OIDC.
+- **Vault**: Manages sensitive secrets instead of GitHub Actions secrets.
 - **Internet Gateway**: Enables internet access for NAT and public endpoints.
 
 ---
@@ -96,5 +103,13 @@ Security is integrated throughout the pipeline by using **GitHub OIDC with fine-
 - Fully automated and repeatable infrastructure setup.
 - No manual steps in AWS console.
 - Scalable and production-ready deployment pipeline.
+- Security-first design:
+  - **OIDC with IAM roles** (no static AWS credentials).
+  - **HashiCorp Vault** for secret management.
+  - **Policy-as-code** validation (OPA, Conftest).
+  - **Continuous security scanning** (Trivy, TFLint, Semgrep).
+  - **Least-privilege IAM policies** applied across services.
+
+---
 
 [def]: ./images/working-image.png
